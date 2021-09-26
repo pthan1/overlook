@@ -1,18 +1,27 @@
 import db from '../apiCalls';
+
 class UserModel {
   constructor() {
-    this.allUsers = [];
+    this.allUsers = this.getAllCustomers();
     this.currentUser = {};
   }
 
   getAllCustomers() {
-    this.allUsers = db.getAllCustomers();
-    return db.getAllCustomers();
+    return db.getAllCustomers()
+    .then(data => return data);
   }
 
   getSingleCustomer(userId) {
-    this.currentUser = db.getSingleCustomer(userId);
-    return db.getSingleCustomer(userId);
+    this.currentUser = db.getSingleCustomer(userId)
+    .then(data => return data);  
+    /*returns an object:
+    {
+    "id": 1,
+      "name": "Leatha Ullrich"
+    }*/
+   
+    return db.getSingleCustomer(userId)
+    .then(data => return data);
   }
 
 }
