@@ -4,22 +4,31 @@ const db = {
   getAllCustomers() {
     return fetch('http://localhost:3001/api/v1/customers')
     .then(response => response.json())
-    .then(data => data)
+    .then(data => data.customers)
     .catch(err => console.log(err));
   },
 
   // in UserModel.js
   getSingleCustomer(userId) {
-    return fetch('http://localhost:3001/api/v1/customers/' + userId)
-      .then(response => response.json())
-      .then(data => data)
+    return fetch(`http://localhost:3001/api/v1/customers/${userId}`)
+      .then(response => 
+        // {
+        // if (!response.ok) {
+        //   console.log(`HTTP error! status: ${response.status}`)
+        // }
+        response.json()
+      // }
+      )
+      .then(data => {
+        let userObject = {'id': data.id, 'name': data.name};
+        return userObject;})
       .catch(err => console.log(err));
   },
   
   // in BookingModel.js
   getAllRooms () {
-   return fetch('http://localhost:3001/api/v1/rooms')
-    .then(response => response.json())
+  return fetch('http://localhost:3001/api/v1/rooms')
+     .then(response => response.json())
     .then(data => data.rooms)
     .catch(err => console.log(err));
   },
@@ -41,7 +50,12 @@ const db = {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        console.log(`HTTP error! status: ${response.status}`)
+      }
+      response.json()
+    })
     .then(data => data)
     .catch(err => console.log(err))
   },
@@ -51,7 +65,12 @@ const db = {
     return fetch(`http://localhost:3001/api/v1/bookings/${bookingId}`, {
       method: 'DELETE'
     })
-    .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          console.log(`HTTP error! status: ${response.status}`)
+        }
+        response.json()
+      })
     .then(data => data)
     .catch(err => console.log(err));
   }
