@@ -1,22 +1,22 @@
 import db from '../apiCalls';
 
 class BookingModel {
-  constructor() {
-    this.allBookings = null;
-    this.UserBookings = [];
+  constructor(allBookings, userBookings) {
+    this.allBookings = allBookings;
+    this.userBookings = userBookings;
   }
 
-  getAllBookings() {
-    this.allBookings = Promise.resolve(db.getAllBookings().then(data => data))
-    // .then(data => data);
-    // maybe I should return a filtered list?
-    // console.log('allBookingsArray', db.getAllBookings()
-    //   .then(data => { console.log(data) }));
+  // getAllBookings() {
+  //   this.allBookings = Promise.resolve(db.getAllBookings().then(data => data))
+  //   // .then(data => data);
+  //   // maybe I should return a filtered list?
+  //   // console.log('allBookingsArray', db.getAllBookings()
+  //   //   .then(data => { console.log(data) }));
 
-    // return db.getAllBookings()
-    // .then(data => data);
+  //   // return db.getAllBookings()
+  //   // .then(data => data);
 
-  }
+  // }
 
   addNewBooking(booking) {
     db.addNewBooking(booking)
