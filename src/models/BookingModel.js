@@ -7,16 +7,16 @@ class BookingModel {
   }
 
   getAllBookings() {
-    this.allBookings = db.getAllBookings
-      .then(data => return data);
+    this.allBookings = db.getAllBookings()
+    .then(data => {return data});
     // maybe I should return a filtered list?
     return db.getAllBookings
-    .then(data => return data);
+    .then(data => {return data});
   }
 
   addNewBooking(booking) {
     db.addNewBooking(booking)
-    .then(data => return data);
+    .then(data => {return data});
     this.getAllBookings();
     //updateDOMsomehow
     //figure out what view i'm doing this in, and what that view looks like 
@@ -24,7 +24,7 @@ class BookingModel {
 
   deleteSingleBooking(bookingId) {
     db.deleteSingleBooking(bookingId)
-    .then(data => return data);
+    .then(data => {return data});
     this.getAllBookings();
     //updateDOMsomehow
     //figure out what view i'm doing this in, and what that view looks like    

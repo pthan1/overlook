@@ -8,12 +8,12 @@ class UserModel {
 
   getAllCustomers() {
     return db.getAllCustomers()
-    .then(data => return data);
+    .then(data => {return data});
   }
 
   getSingleCustomer(userId) {
     this.currentUser = db.getSingleCustomer(userId)
-    .then(data => return data);  
+    .then(data => {return data});  
     /*returns an object:
     {
     "id": 1,
@@ -21,7 +21,7 @@ class UserModel {
     }*/
    
     return db.getSingleCustomer(userId)
-    .then(data => return data);
+    .then(data => {return data});
   }
 
 }
