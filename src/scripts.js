@@ -20,6 +20,8 @@ import RoomModel from './models/RoomModel';
 import UserView from './views/UserView';
 import BookingView from './views/UserView'
 
+import Customer from './Classes/Customer';
+
 const mainPageView = document.querySelector('.main-page');
 const loginForm = document.querySelector('.login-form');
 const usernameField = document.getElementById('username-field');
@@ -41,17 +43,20 @@ const searchResultsView = document.querySelector('.search-results-view');
 let allCustomers, singleCustomer, allRooms, allBookings;
 let customerId;
 
-const app = new UserController(new UserModel(allCustomers, singleCustomer), new UserView(), new BookingModel(), new BookingView(), new RoomModel());
+let app;
 
+app = new UserController(new UserModel(allCustomers, singleCustomer), new UserView(), new BookingModel(), new BookingView(), new RoomModel());
 
 
 loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
   if (passwordField.value === 'overlook2021') {
-  customerId = app.returnUserId(usernameField.value);
-  singleCustomer = getSingleCustomer(customerId);
-  displayUserDashboard();
-  
+
+    customerId = app.returnUserId(usernameField.value);
+    
+    singleCustomer = getSingleCustomer(customerId);
+    displayUserDashboard();
+    
   }
 })
 
@@ -64,12 +69,17 @@ const apiData = () => {
 }
 
 const getSingleCustomer = (customerId) => {
-  let customerObject = db.getSingleCustomer(customerId).then(data => data);
-  Promise.all([customerObject])
-  .then(data => data);
+
+  return db.getSingleCustomer(customerId).then(data => {new Customer(data)});
+  // Promise.all([customerObject])
+  // .then(data => {
+  //   customerObject = data;
+  // });
 }
 
-apiData();
+
+
+
 
 const displayUserDashboard = () => {
   hide(mainPageView);
