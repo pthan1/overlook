@@ -40,25 +40,24 @@ const backToDashboardBtn = document.querySelector('.back-to-dashboard-btn');
 
 const searchResultsView = document.querySelector('.search-results-view');
 
-let allCustomers, singleCustomer, allRooms, allBookings;
+var allCustomers, allRooms, allBookings;
 
-let customerId;
+var allCustomers2;
 
-let app;
+var customerId;
 
-const instantiateData = () => {
-  allCustomers = allCustomers.map((customer) => {
-    return new Customer(customer);
-  });
-  
-}
+var app;
+
+let userModel;
 
 const getApiData = () => {
   allCustomers = db.getAllCustomers().then(data => data);
   allRooms = db.getAllRooms().then(data => data);
   allBookings = db.getAllBookings().then(data => data);
   return Promise.all([allCustomers, allRooms, allBookings])
-}
+};
+
+
 
 function returnData() {
   getApiData().then(data => {
@@ -66,21 +65,27 @@ function returnData() {
     allRooms = data[1];
     allBookings = data[2];
     instantiateData();
+    
   })
-}
+};
 
+const instantiateData = () => {
+  allCustomers2 = allCustomers.map((customer) => {
+    return new Customer(customer);
+  });
+  app = new UserController(allCustomers2, allBookings, allRooms)
+  
+};
 
 
 window.addEventListener('load', returnData);
-
-
-app = new UserController(new UserModel(allCustomers, singleCustomer), new UserView(), new BookingModel(), new BookingView(), new RoomModel());
 
 
 loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
   // if (passwordField.value === 'overlook2021') {
     customerId = app.returnUserId(usernameField.value);
+    let usersBookings2 = app.returnUserBookings(customerId);
 
     displayUserDashboard();
     

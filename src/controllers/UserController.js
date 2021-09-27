@@ -1,9 +1,9 @@
 class UserController {
-  constructor(newUserModelInstance, newUserViewInstance, newBookingModelInstance, newRoomModelInstance) {
-    this.userModel = newUserModelInstance;
-    this.userView = newUserViewInstance;
-    this.bookingModel = newBookingModelInstance;
-    this.roomModel = newRoomModelInstance;
+  constructor(allCustomers, allBookings, allRooms) {
+    this.userModel = allCustomers;
+    // this.userView = newUserViewInstance;
+    this.bookingModel = allBookings;
+    this.roomModel = allRooms;
   }
 
   returnUserId(usernameInputValue) {
@@ -13,17 +13,17 @@ class UserController {
     }
   }
 
-  returnUserBookings() {
-      let customerName = this.userModel.getSingleCustomer(customerId).then(data => data);
-      this.bookingModel.getAllBookings();
-      userBookings = this.bookingModel.filterUserBookings(customerId, this.RoomModel.allRooms);
-
-      this.userView.displayUserBookings(userBookings);
+  returnUserBookings(customerId) {
+    console.log(this.bookingModel)  
+    console.log(customerId)
+    let usersBookings = this.bookingModel.filter(booking => {return booking.userID === parseInt(customerId)});
+    return usersBookings;
+    // this.userView.displayUserBookings(userBookings);
     // console.log('userbookings', userBookings)
     //   this.userView.displayUserBookings(userBookings);
-    }  
-  
+  }
 }
+  
+
 
 export default UserController;
-
