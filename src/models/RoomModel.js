@@ -1,14 +1,14 @@
 import db from '../apiCalls';
 
 class RoomModel {
-  constructor() {
-    this.allRooms = this.getAllRooms();
+  constructor(allRooms) {
+    this.allRooms = allRooms;
   }
 
-  getAllRooms() {
-    return db.getAllRooms()
-    .then(data => {return data});
-  }
+  // getAllRooms() {
+  //   return db.getAllRooms()
+  //   .then(data => {return data});
+  // }
 
 }
 

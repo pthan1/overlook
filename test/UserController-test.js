@@ -1,31 +1,25 @@
-import chai from 'chai';
+import { assert } from 'chai';
 import UserController from '../src/controllers/UserController';
 import UserModel from '../src/models/UserModel'
 import UserView from '../src/views/UserView'
 import BookingModel from '../src/models/BookingModel';
 import RoomModel from '../src/models/RoomModel';
+import testData from '../test/testData';
 
-const expect = chai.expect;
 
 describe('UserController', function () {
-  let userController;
-  let userModel;
-  let userView;
-  let bookingModel;
-  let roomModel;
+  let userController, userModel, userView, bookingModel, roomModel;
 
 
   beforeEach(function() {
     userModel = new UserModel();
     userView = new UserView();
     bookingModel = new BookingModel();
-    roomModel = new RoomModel();
-
     userController = new UserController(userModel, userView, bookingModel, roomModel);
   });
 
   it('should store an instance of model', function () {
-    expect(userController.userModel).to.be.an.instanceOf(UserModel)
+    assert.instanceOf(userController.)
   });
 
   it('should return bookings for a customer Id', function () {

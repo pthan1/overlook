@@ -3,7 +3,6 @@ import db from '../apiCalls';
 class UserModel {
   constructor(allCustomers, singleCustomer) {
     this.allCustomers = allCustomers;
-    this.currentCustomer = singleCustomer;
   }
 
   // getAllCustomers() {

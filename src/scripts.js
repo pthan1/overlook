@@ -41,43 +41,51 @@ const backToDashboardBtn = document.querySelector('.back-to-dashboard-btn');
 const searchResultsView = document.querySelector('.search-results-view');
 
 let allCustomers, singleCustomer, allRooms, allBookings;
+
 let customerId;
 
 let app;
+
+const instantiateData = () => {
+  allCustomers = allCustomers.map((customer) => {
+    return new Customer(customer);
+  });
+  
+}
+
+const getApiData = () => {
+  allCustomers = db.getAllCustomers().then(data => data);
+  allRooms = db.getAllRooms().then(data => data);
+  allBookings = db.getAllBookings().then(data => data);
+  return Promise.all([allCustomers, allRooms, allBookings])
+}
+
+function returnData() {
+  getApiData().then(data => {
+    allCustomers = data[0];
+    allRooms = data[1];
+    allBookings = data[2];
+    instantiateData();
+  })
+}
+
+
+
+window.addEventListener('load', returnData);
+
 
 app = new UserController(new UserModel(allCustomers, singleCustomer), new UserView(), new BookingModel(), new BookingView(), new RoomModel());
 
 
 loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
-  if (passwordField.value === 'overlook2021') {
-
+  // if (passwordField.value === 'overlook2021') {
     customerId = app.returnUserId(usernameField.value);
-    
-    singleCustomer = getSingleCustomer(customerId);
+
     displayUserDashboard();
     
   }
-})
-
-const apiData = () => {
-  allCustomers = db.getAllCustomers().then(data => data);
-  allRooms = db.getAllRooms().then(data => data);
-  allBookings = db.getAllBookings().then(data => data);
-  Promise.all([allCustomers, allRooms, allBookings])
-  .then(data => data)
-}
-
-const getSingleCustomer = (customerId) => {
-
-  return db.getSingleCustomer(customerId).then(data => {new Customer(data)});
-  // Promise.all([customerObject])
-  // .then(data => {
-  //   customerObject = data;
-  // });
-}
-
-
+)
 
 
 

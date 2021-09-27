@@ -16,7 +16,7 @@ const testData = {
 
   "userId": 1,
 
-  "currentUser": {
+  "currentCustomer": {
     "id": 1,
     "name": "Leatha Ullrich"
   },

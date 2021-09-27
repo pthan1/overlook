@@ -3,7 +3,7 @@ class UserController {
     this.userModel = newUserModelInstance;
     this.userView = newUserViewInstance;
     this.bookingModel = newBookingModelInstance;
-    this.RoomModel = newRoomModelInstance;
+    this.roomModel = newRoomModelInstance;
   }
 
   returnUserId(usernameInputValue) {
