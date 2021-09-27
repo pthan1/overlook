@@ -7,7 +7,7 @@ class RoomModel {
 
   getAllRooms() {
     return db.getAllRooms()
-    .then(data => return data);
+    .then(data => {return data});
   }
 
 }
