@@ -7,9 +7,65 @@
   <title>Webpack Starter Kit</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
+  <section class="main-page">
+    <section class="introduction">
+      <h1 class="welcome">Welcome To</h1>
+      <h1 class="logo-large">The Pearl</h1>
+      <h1 class="tagline">Resort & Spa</h1>
+    </section>
+    <section class="login">
+      <form class="login-form">
+        <label for="username-field"></label>
+        <input type="text" id="username-field" name="username-field">
+        <label for="password-field"></label>
+        <input type="text" id="password-field" name="username-field">
+        <input type="submit" class="submit-btn-login">
+      </form>
+    </section>
+  </section>
+
+  <section class="user-dashboard-view hidden">
+    <div class="content-container">
+      <section class="user-bookings">
+      </section>
+      <section class="search-for-rooms">
+        <div class="date-picker">
+          <form class="search-for-rooms-form">
+            <label for="check-in-date"></label>
+            <input type="date" id="check-in-date" name="check-in-date">
+            <label for="check-out-date"></label>
+            <input type="date" id="check-out-date" name="check-out-date">
+          </form>
+        </div>
+      <section>
+    </div>
+  </section>
+
+  <section class="search-results-view hidden">
+    <div class="content-container">
+      <section class="search-by-room-type-section">
+        <h3 class="room-type-tags-header">Filter By Room Type</h3>
+        <div class="room-type-tags-section">
+          <div class="room-type-tag"><input type="checkbox"><label for="residential-suite"></label></div>
+          <div class="room-type-tag"><input type="checkbox"><label for="suite"></label></div>
+          <div class="room-type-tag"><input type="checkbox"><label for="single-room"></label></div>
+          <div class="room-type-tag"><input type="checkbox"><label for="junior-suite"></label></div>
+        </div>
+      </section>
+      <section class="search-results-section">
+        <h2 class="select-a-room">Select A Room</h2>
+        <div class="search-results-container"></div>
+      </section>
+      <section class="no-results-found hidden">
+        <p>We're Sorry!</p>
+        <p>There are no rooms available for those selected dates!</p>
+        <p>Please go back and alter your stay!</p>
+    </section>
+    </div>
+  </section>
+
+
+
   <script src="bundle.js"></script>
 
 </body>
