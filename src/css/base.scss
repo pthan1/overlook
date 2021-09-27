@@ -2,5 +2,13 @@
 @import '_variables';
 
 body {
-  background: $primary-background;
+	height: 100vh;
+	background: $primary-background;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	mix-blend-mode: darken;
+}
+
+.hidden {
+	display: none;
 }
