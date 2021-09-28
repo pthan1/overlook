@@ -26,7 +26,10 @@ class UserController {
     }
     )
     return totalCost;
-}
+  }
+
+  
+
 }
   
 export default UserController;

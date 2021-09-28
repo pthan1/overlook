@@ -27,7 +27,7 @@ import BookingView from './views/UserView'
 import Customer from './Classes/Customer';
 
 const userBookingsSection = document.querySelector('.user-bookings');
-const userBookingContainer = document.querySelector('.user-booking-container');
+export const userBookingContainer = document.querySelector('.user-booking-container');
 
 const mainPageView = document.querySelector('.main-page');
 const loginForm = document.querySelector('.login-form');
@@ -59,7 +59,7 @@ var allCustomers2;
 
 var customerId;
 
-var app;
+export var app;
 
 let userModel;
 
@@ -101,25 +101,27 @@ loginSubmitBtn.addEventListener('click', function(e) {
     let userBookings2 = app.returnUserBookings(customerId);
     
     let totalCost = app.calculateUserTotalSpentOnBookings(userBookings2);
+    console.log('total cost in scripts', totalCost)
     updateDom.renderTotalCost(totalCost);
 
-    userBookings2.forEach((booking) => {
-    let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
+    updateDom.displayUserBookings(userBookings2);
+  //   userBookings2.forEach((booking) => {
+  //   let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
 
-    userBookingContainer.innerHTML += 
-        `
-        <div class="booking-card">
-          <div class="room-image"></div>
-          <div class="room-details">
-          <p>Date: ${booking.date}</p>
-            <p>${bookingByRoomType.roomType}</p>
-            <p>Bed Size: ${bookingByRoomType.bedSize}</p>
-            <p>Number of Beds: ${bookingByRoomType.numBeds}</p>
-          </div>
-          <div class="room-cost-book-btn">Cost Per Night: $ ${bookingByRoomType.costPerNight}</div>
-        </div>
-        `;
-  });
+  //   userBookingContainer.innerHTML += 
+  //       `
+  //       <div class="booking-card">
+  //         <div class="room-image"></div>
+  //         <div class="room-details">
+  //         <p>Date: ${booking.date}</p>
+  //           <p>${bookingByRoomType.roomType}</p>
+  //           <p>Bed Size: ${bookingByRoomType.bedSize}</p>
+  //           <p>Number of Beds: ${bookingByRoomType.numBeds}</p>
+  //         </div>
+  //         <div class="room-cost-book-btn">Cost Per Night: $ ${bookingByRoomType.costPerNight}</div>
+  //       </div>
+  //       `;
+  // });
   displayUserDashboard();
   }
 }
