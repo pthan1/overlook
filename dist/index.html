@@ -35,10 +35,15 @@
         <h2 class="search-for-room">Search For A Room for One Night</h2>
         <div class="date-picker">
           <form class="search-for-rooms-form">
-            <label for="check-in-date"></label>
-            <input type="date" id="check-in-date" name="check-in-date">
-            <!-- <label for="check-out-date"></label>
-            <input type="date" id="check-out-date" name="check-out-date"> -->
+            <label for="check-in-date">Check-In Date</label>
+            <input type="date" id="check-in-date" name="check-in-date" required>
+         <label for="search-by-room-type">Search By Room Type</label>
+         <select name="room-type" id="room-type" required>
+           <option value="residential suite">Residential Suite</option>
+           <option value="suite">Suite</option>
+           <option value="single room">Single Room</option>
+           <option value="junior suite">Junior Suite</option>
+         </select>
             <input type="submit" class="submit-btn-search-for-rooms">
           </form>
         </div>

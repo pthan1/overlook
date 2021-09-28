@@ -14,7 +14,6 @@ const updateDom = {
             <p>Number of Beds: ${userBookings.numBeds}</p>
           </div>
           <div class="room-cost-book-btn">Cost Per Night: $ ${userBookings.costPerNight}</div>
-          <button class="favorite styled" type="button">Book Now</button>
         </div>
         `;
   }

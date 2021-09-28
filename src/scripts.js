@@ -39,7 +39,7 @@ const totalSpentHeader = document.querySelector('.total-spent');
 
 const searchForRoomsForm = document.querySelector('.search-for-rooms-form');
 const checkInDateField = document.getElementById('check-in-date');
-const checkOutDateField = document.getElementById('check-out-date');
+const searchForRoomTypeField = document.getElementById('room-type');
 const searchForRoomsBtn = document.querySelector('.submit-btn-search-for-rooms');
 const resetFiltersBtn = document.querySelector('.reset-filters-btn');
 const backToDashboardBtn = document.querySelector('.back-to-dashboard-btn');
@@ -85,7 +85,10 @@ const instantiateData = () => {
   
 };
 
-window.addEventListener('load', returnData);
+window.addEventListener('load', function() {
+  returnData();
+  returnTodaysDate();
+});
 
 loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
@@ -119,10 +122,11 @@ loginSubmitBtn.addEventListener('click', function(e) {
 searchForRoomsBtn.addEventListener('click', function(e) {
   e.preventDefault();
   let checkInDate = checkInDateField.value;
-  console.log(checkInDate)
-  console.log(typeof(checkInDate))
+console.log(checkInDate);
   let newDate = dayjs(checkInDate).format('YYYY/MM/DD')
-  console.log(newDate);
+
+  let roomTypeToSearch = searchForRoomTypeField.value;
+  console.log(roomTypeToSearch)
 
   let unavailableRoomByBooking = app.bookingModel.filter(booking => { 
     if (booking.date === newDate) {
@@ -134,20 +138,16 @@ searchForRoomsBtn.addEventListener('click', function(e) {
 
   unavailableRoomsRoomNumbers = new Set(unavailableRoomsRoomNumbers);
   unavailableRoomsRoomNumbers = [...unavailableRoomsRoomNumbers];
-  console.log(unavailableRoomsRoomNumbers)
-  // let availableRooms = unavailableRooms.filter
-    // console.log(unavailableRooms);
-// unavailableRooms.filter(())
+
   let availableRooms = app.roomModel.filter(booking => {
     if (!unavailableRoomsRoomNumbers.includes(booking.number)) {
       return booking;
     }
   })
- console.log('available rooms', availableRooms);
+console.log(availableRooms)
+let filteredRooms = filterRoomsByRoomType(availableRooms, roomTypeToSearch);
 
-availableRooms.forEach((room) => {
-  // let bookingByRoomType2 = app.roomModel.filter((hotelRoom) => { return hotelRoom.number !== booking.roomNumber })
-console.log(room);
+filteredRooms.forEach((room) => {
 
   searchResultsSection.innerHTML +=
     `
@@ -155,11 +155,13 @@ console.log(room);
           <div class="room-image"></div>
           <div class="room-details">
           <p>Date: ${newDate}</p>
+          </>Room: ${room.number}</p>
             <p>${room.roomType}</p>
             <p>Bed Size: ${room.bedSize}</p>
             <p>Number of Beds: ${room.numBeds}</p>
           </div>
-          <div class="room-cost-book-btn">Cost Per Night: $ ${room.costPerNight}</div>
+          <div class="room-cost-book-btn">Cost Per Night: $ ${room.costPerNight}<br>
+          <button class="book-now-btn" type="button">Book Now</button></div>
         </div>
         `;
 });
@@ -167,16 +169,20 @@ console.log(room);
   displaySearchResults()
   });
 
-  // console.log(filteredResults);
-// console.log(filteredResults)
-  // bookings array
-// filter 
-// return only bookings that have a matching room number for that room
-// check the Dates
-
-  
 
 
+const filterRoomsByRoomType = (availableRooms, roomTypeToSearch) => {
+  let availableRoomsByRoomType = availableRooms.filter((room) => {
+    return room.roomType === roomTypeToSearch
+  })
+  return availableRoomsByRoomType;
+  }
+
+
+const returnTodaysDate = () => {
+  var today = new Date();
+  checkInDateField.value = today.toISOString().substr(0, 10);
+}
 
 const displayUserDashboard = () => {
   hide(mainPageView);
@@ -188,14 +194,12 @@ const displaySearchResults = () => {
   hide(mainPageView);
   hide(userDashboardView);
   show(searchResultsView);
-
-
-}
+};
 
 const show = (element) => {
   element.classList.remove("hidden");
-}
+};
 
 const hide = (element) => {
   element.classList.add("hidden");
-}
+};
