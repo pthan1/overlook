@@ -158,21 +158,51 @@ filteredRooms.forEach((room) => {
     `
         <div class="booking-card">
           <div class="room-image"></div>
-          <div class="room-details">
-          <p>Date: ${newDate}</p>
-          </>Room: ${room.number}</p>
+          <div class="room-details" id="${room.number}">
+            <p>Date: ${newDate}</p>
+            <p>Room: ${room.number}</p>
             <p>${room.roomType}</p>
             <p>Bed Size: ${room.bedSize}</p>
             <p>Number of Beds: ${room.numBeds}</p>
+            <p>Cost Per Night: $ ${room.costPerNight}</p>
+            <br>
+            <button class="book-now-btn" type="button">Book Now</button>
           </div>
-          <div class="room-cost-book-btn">Cost Per Night: $ ${room.costPerNight}<br>
-          <button class="book-now-btn" type="button">Book Now</button></div>
         </div>
         `;
 });
 
   displaySearchResults()
   });
+
+
+searchResultsSection.addEventListener('click', function(e) {
+  if (e.target.className === 'book-now-btn') {
+    let roomToBook = { 
+      "userID": 48, 
+      "date": "2019/09/23", 
+      "roomNumber": 4 }
+  }
+})
+
+searchResultsSection.addEventListener('click', function (e) {
+  if (e.target.className === 'book-now-btn') {
+    let roomNumberOfNewBooking = e.target.closest('.room-details').id;
+    
+    let roomToBook = {
+      "userID": parseInt(customerId),
+      "date": dayjs(checkInDateField.value).format('YYYY/MM/DD'),
+      "roomNumber": parseInt(roomNumberOfNewBooking)
+    }
+    bookRoom(roomToBook);
+  }
+  displayUserDashboard();
+
+})
+
+const bookRoom = (booking) => {
+  db.addNewBooking(booking);
+};
 
 
 const filterRoomsByRoomType = (availableRooms, roomTypeToSearch) => {
