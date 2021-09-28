@@ -46,6 +46,7 @@ const backToDashboardBtn = document.querySelector('.back-to-dashboard-btn');
 const noResultsFoundSection = document.querySelector('.no-results-found');
 const searchResultsSection = document.querySelector('.search-results-container');
 
+
 const searchResultsView = document.querySelector('.search-results-view');
 const loginSubmitBtn = document.querySelector('.submit-btn-login');
 
@@ -146,9 +147,10 @@ console.log(checkInDate);
   })
 console.log(availableRooms)
 let filteredRooms = filterRoomsByRoomType(availableRooms, roomTypeToSearch);
+  searchResultsSection.innerHTML = '';
+
 
 filteredRooms.forEach((room) => {
-
   searchResultsSection.innerHTML +=
     `
         <div class="booking-card">
@@ -170,7 +172,6 @@ filteredRooms.forEach((room) => {
   });
 
 
-
 const filterRoomsByRoomType = (availableRooms, roomTypeToSearch) => {
   let availableRoomsByRoomType = availableRooms.filter((room) => {
     return room.roomType === roomTypeToSearch
@@ -184,10 +185,11 @@ const returnTodaysDate = () => {
   checkInDateField.value = today.toISOString().substr(0, 10);
 }
 
+
 const displayUserDashboard = () => {
   hide(mainPageView);
   hide(searchResultsView);
-  show(userDashboardView)
+  show(userDashboardView);
 };
 
 const displaySearchResults = () => {
@@ -196,6 +198,8 @@ const displaySearchResults = () => {
   show(searchResultsView);
 };
 
+
+
 const show = (element) => {
   element.classList.remove("hidden");
 };
@@ -203,3 +207,5 @@ const show = (element) => {
 const hide = (element) => {
   element.classList.add("hidden");
 };
+
+backToDashboardBtn.addEventListener('click', function() {displayUserDashboard()})
