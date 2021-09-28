@@ -1,3 +1,7 @@
+var dayjs = require('dayjs');
+var customParseFormat = require('dayjs/plugin/customParseFormat')
+dayjs.extend(customParseFormat)
+
 import './css/base.scss';
 
 import './images/bg.jpg'
@@ -31,13 +35,17 @@ const usernameField = document.getElementById('username-field');
 const passwordField = document.getElementById('password-field');
 
 const userDashboardView = document.querySelector('.user-dashboard-view');
+const totalSpentHeader = document.querySelector('.total-spent');
 
 const searchForRoomsForm = document.querySelector('.search-for-rooms-form');
 const checkInDateField = document.getElementById('check-in-date');
-const checkOutDateField = document.getElementById('check-out-date');
-const searchForRoomsBtn = document.querySelector('submit-btn-search-for-rooms');
+const searchForRoomTypeField = document.getElementById('room-type');
+const searchForRoomsBtn = document.querySelector('.submit-btn-search-for-rooms');
 const resetFiltersBtn = document.querySelector('.reset-filters-btn');
 const backToDashboardBtn = document.querySelector('.back-to-dashboard-btn');
+const noResultsFoundSection = document.querySelector('.no-results-found');
+const searchResultsSection = document.querySelector('.search-results-container');
+
 
 const searchResultsView = document.querySelector('.search-results-view');
 const loginSubmitBtn = document.querySelector('.submit-btn-login');
@@ -60,8 +68,6 @@ const getApiData = () => {
   return Promise.all([allCustomers, allRooms, allBookings])
 };
 
-
-
 function returnData() {
   getApiData().then(data => {
     allCustomers = data[0];
@@ -80,20 +86,26 @@ const instantiateData = () => {
   
 };
 
-
-window.addEventListener('load', returnData);
-
+window.addEventListener('load', function() {
+  returnData();
+  returnTodaysDate();
+});
 
 loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
   // if (passwordField.value === 'overlook2021') {
     customerId = app.returnUserId(usernameField.value);
     let userBookings2 = app.returnUserBookings(customerId);
-  
+  let totalCost = 0;
+
     userBookings2.forEach((booking) => {
     let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
-      
-    userBookingContainer.innerHTML +=
+
+    totalCost += bookingByRoomType.costPerNight;
+
+      totalSpentHeader.innerHTML = "Total Spent on Bookings: $ " + totalCost;
+
+    userBookingContainer.innerHTML += 
         `
         <div class="booking-card">
           <div class="room-image"></div>
@@ -108,27 +120,125 @@ loginSubmitBtn.addEventListener('click', function(e) {
         `;
   });
   displayUserDashboard();
-
   }
 )
 
-function displayUserBookings(userBookings) {
+searchForRoomsBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  let checkInDate = checkInDateField.value;
+console.log(checkInDate);
+  let newDate = dayjs(checkInDate).format('YYYY/MM/DD')
+
+  let roomTypeToSearch = searchForRoomTypeField.value;
+  console.log(roomTypeToSearch)
+
+  let unavailableRoomByBooking = app.bookingModel.filter(booking => { 
+    if (booking.date === newDate) {
+    return booking;
+    }}
+  )
   
-  
+  let unavailableRoomsRoomNumbers = unavailableRoomByBooking.map(room => {return room.roomNumber});
+
+  unavailableRoomsRoomNumbers = new Set(unavailableRoomsRoomNumbers);
+  unavailableRoomsRoomNumbers = [...unavailableRoomsRoomNumbers];
+
+  let availableRooms = app.roomModel.filter(booking => {
+    if (!unavailableRoomsRoomNumbers.includes(booking.number)) {
+      return booking;
+    }
+  })
+console.log(availableRooms)
+let filteredRooms = filterRoomsByRoomType(availableRooms, roomTypeToSearch);
+  searchResultsSection.innerHTML = '';
+
+
+filteredRooms.forEach((room) => {
+  searchResultsSection.innerHTML +=
+    `
+        <div class="booking-card">
+          <div class="room-image"></div>
+          <div class="room-details" id="${room.number}">
+            <p>Date: ${newDate}</p>
+            <p>Room: ${room.number}</p>
+            <p>${room.roomType}</p>
+            <p>Bed Size: ${room.bedSize}</p>
+            <p>Number of Beds: ${room.numBeds}</p>
+            <p>Cost Per Night: $ ${room.costPerNight}</p>
+            <br>
+            <button class="book-now-btn" type="button">Book Now</button>
+          </div>
+        </div>
+        `;
+});
+
+  displaySearchResults()
+  });
+
+
+searchResultsSection.addEventListener('click', function(e) {
+  if (e.target.className === 'book-now-btn') {
+    let roomToBook = { 
+      "userID": 48, 
+      "date": "2019/09/23", 
+      "roomNumber": 4 }
+  }
+})
+
+searchResultsSection.addEventListener('click', function (e) {
+  if (e.target.className === 'book-now-btn') {
+    let roomNumberOfNewBooking = e.target.closest('.room-details').id;
+    
+    let roomToBook = {
+      "userID": parseInt(customerId),
+      "date": dayjs(checkInDateField.value).format('YYYY/MM/DD'),
+      "roomNumber": parseInt(roomNumberOfNewBooking)
+    }
+    bookRoom(roomToBook);
+  }
+  displayUserDashboard();
+
+})
+
+const bookRoom = (booking) => {
+  db.addNewBooking(booking);
+};
+
+
+const filterRoomsByRoomType = (availableRooms, roomTypeToSearch) => {
+  let availableRoomsByRoomType = availableRooms.filter((room) => {
+    return room.roomType === roomTypeToSearch
+  })
+  return availableRoomsByRoomType;
+  }
+
+
+const returnTodaysDate = () => {
+  var today = new Date();
+  checkInDateField.value = today.toISOString().substr(0, 10);
 }
 
 
 const displayUserDashboard = () => {
   hide(mainPageView);
   hide(searchResultsView);
-  show(userDashboardView)
-}
+  show(userDashboardView);
+};
+
+const displaySearchResults = () => {
+  hide(mainPageView);
+  hide(userDashboardView);
+  show(searchResultsView);
+};
+
 
 
 const show = (element) => {
   element.classList.remove("hidden");
-}
+};
 
 const hide = (element) => {
   element.classList.add("hidden");
-}
+};
+
+backToDashboardBtn.addEventListener('click', function() {displayUserDashboard()})

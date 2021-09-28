@@ -28,16 +28,22 @@
     <div class="content-container">
       <section class="user-bookings">
         <h2 class="my-bookings">My Bookings</h2>
+        <h3 class="total-spent"></h3>
       <section class="user-booking-container"></section>
       </section>
       <section class="search-for-rooms">
-        <h2 class="search-for-room">Search For A Room</h2>
+        <h2 class="search-for-room">Search For A Room for One Night</h2>
         <div class="date-picker">
           <form class="search-for-rooms-form">
-            <label for="check-in-date"></label>
-            <input type="date" id="check-in-date" name="check-in-date">
-            <label for="check-out-date"></label>
-            <input type="date" id="check-out-date" name="check-out-date">
+            <label for="check-in-date">Check-In Date</label>
+            <input type="date" id="check-in-date" name="check-in-date" required>
+         <label for="search-by-room-type">Search By Room Type</label>
+         <select name="room-type" id="room-type" required>
+           <option value="residential suite">Residential Suite</option>
+           <option value="suite">Suite</option>
+           <option value="single room">Single Room</option>
+           <option value="junior suite">Junior Suite</option>
+         </select>
             <input type="submit" class="submit-btn-search-for-rooms">
           </form>
         </div>
@@ -48,15 +54,7 @@
   <section class="search-results-view hidden">
     <div class="content-container">
       <section class="search-by-room-type-section">
-        <h3 class="room-type-tags-header">Filter By Room Type</h3>
-        <div class="room-type-tags-section">
-          <div class="room-type-tag"><input type="checkbox"><label for="residential-suite"></label></div>
-          <div class="room-type-tag"><input type="checkbox"><label for="suite"></label></div>
-          <div class="room-type-tag"><input type="checkbox"><label for="single-room"></label></div>
-          <div class="room-type-tag"><input type="checkbox"><label for="junior-suite"></label></div>
-        </div>
-        <button class="reset-filters-btn"></button>
-        <button class="back-to-dashboard-btn"></button>
+        <button class="back-to-dashboard-btn">Back to Dashboard</button>
       </section>
       <section class="search-results-section">
         <h2 class="select-a-room">Select A Room</h2>

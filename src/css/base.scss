@@ -4,15 +4,15 @@
 body {
 	height: 100vh;
 	background: $primary-background;
-	background-repeat: no-repeat;
+	background-repeat: repeat;
 	background-size: 100% 100%;
-	// mix-blend-mode: darken;
 }
 
 .main-page {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	height: 100%;
 }
 
 .introduction {
@@ -38,7 +38,8 @@ body {
 	display: none;
 }
 
-.user-booking-container {
+.user-booking-container,
+.search-results-container {
 	border: 1px red solid;
 	display: flex;
 	flex-direction: row;

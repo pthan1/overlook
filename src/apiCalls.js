@@ -7,21 +7,6 @@ const db = {
     .then(data => data.customers)
     .catch(err => console.log(err));
   },
-
-  // // in UserModel.js
-  // getSingleCustomer(userId) {
-  //   return fetch(`http://localhost:3001/api/v1/customers/${userId}`)
-  //     .then(response => 
-  //       // {
-  //       // if (!response.ok) {
-  //       //   console.log(`HTTP error! status: ${response.status}`)
-  //       // }
-  //       response.json()
-  //     // }
-  //     )
-  //     .then(data => data)
-  //     .catch(err => console.log(err));
-  // },
   
   // in BookingModel.js
   getAllRooms () {
