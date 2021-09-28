@@ -40,13 +40,21 @@ body {
 
 .user-booking-container,
 .search-results-container {
-	border: 1px red solid;
+	// border: 1px red solid;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	pointer-events: none;
 }
 
 .booking-card {
 	margin: 3px;
-	background-color: grey;
+	background-color: #eae0c8;
+	filter: drop-shadow(0 0 0.25rem $gold-main-color);
+	border-radius: 5px;
+	// pointer-events: none;
+
+	.book-now-btn {
+		pointer-events: initial;
+	}
 }

@@ -93,9 +93,10 @@ window.addEventListener('load', function() {
 
 loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
-  // if (passwordField.value === 'overlook2021') {
+  if (passwordField.value === 'overlook2021') {
     customerId = app.returnUserId(usernameField.value);
     let userBookings2 = app.returnUserBookings(customerId);
+
   let totalCost = 0;
 
     userBookings2.forEach((booking) => {
@@ -103,7 +104,7 @@ loginSubmitBtn.addEventListener('click', function(e) {
 
     totalCost += bookingByRoomType.costPerNight;
 
-      totalSpentHeader.innerHTML = "Total Spent on Bookings: $ " + totalCost;
+      totalSpentHeader.innerHTML = "Total Spent on Bookings: $ " + totalCost.toFixed(2);
 
     userBookingContainer.innerHTML += 
         `
@@ -121,6 +122,7 @@ loginSubmitBtn.addEventListener('click', function(e) {
   });
   displayUserDashboard();
   }
+}
 )
 
 searchForRoomsBtn.addEventListener('click', function(e) {
@@ -152,12 +154,12 @@ console.log(availableRooms)
 let filteredRooms = filterRoomsByRoomType(availableRooms, roomTypeToSearch);
   searchResultsSection.innerHTML = '';
 
-
+if (filteredRooms.length > 0){
+  hide(noResultsFoundSection);
 filteredRooms.forEach((room) => {
   searchResultsSection.innerHTML +=
     `
         <div class="booking-card">
-          <div class="room-image"></div>
           <div class="room-details" id="${room.number}">
             <p>Date: ${newDate}</p>
             <p>Room: ${room.number}</p>
@@ -171,19 +173,12 @@ filteredRooms.forEach((room) => {
         </div>
         `;
 });
+} else {
+  show(noResultsFoundSection);
+}
 
   displaySearchResults()
   });
-
-
-searchResultsSection.addEventListener('click', function(e) {
-  if (e.target.className === 'book-now-btn') {
-    let roomToBook = { 
-      "userID": 48, 
-      "date": "2019/09/23", 
-      "roomNumber": 4 }
-  }
-})
 
 searchResultsSection.addEventListener('click', function (e) {
   if (e.target.className === 'book-now-btn') {
@@ -212,12 +207,10 @@ const filterRoomsByRoomType = (availableRooms, roomTypeToSearch) => {
   return availableRoomsByRoomType;
   }
 
-
 const returnTodaysDate = () => {
   var today = new Date();
   checkInDateField.value = today.toISOString().substr(0, 10);
 }
-
 
 const displayUserDashboard = () => {
   hide(mainPageView);
@@ -230,7 +223,6 @@ const displaySearchResults = () => {
   hide(userDashboardView);
   show(searchResultsView);
 };
-
 
 
 const show = (element) => {
