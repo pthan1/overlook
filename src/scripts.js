@@ -35,6 +35,7 @@ const usernameField = document.getElementById('username-field');
 const passwordField = document.getElementById('password-field');
 
 const userDashboardView = document.querySelector('.user-dashboard-view');
+const totalSpentHeader = document.querySelector('.total-spent');
 
 const searchForRoomsForm = document.querySelector('.search-for-rooms-form');
 const checkInDateField = document.getElementById('check-in-date');
@@ -95,7 +96,9 @@ loginSubmitBtn.addEventListener('click', function(e) {
     userBookings2.forEach((booking) => {
     let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
       
-    userBookingContainer.innerHTML +=
+    // totalSpent.innerHTML += bookingByRoomType.costPerNight;
+
+    userBookingContainer.innerHTML += 
         `
         <div class="booking-card">
           <div class="room-image"></div>
@@ -121,60 +124,46 @@ searchForRoomsBtn.addEventListener('click', function(e) {
   let newDate = dayjs(checkInDate).format('YYYY/MM/DD')
   console.log(newDate);
 
-  let unavailableRooms = app.bookingModel.filter(booking => { 
+  let unavailableRoomByBooking = app.bookingModel.filter(booking => { 
     if (booking.date === newDate) {
     return booking;
     }}
-  ).map(room => {return room.roomNumber});
+  )
+  
+  let unavailableRoomsRoomNumbers = unavailableRoomByBooking.map(room => {return room.roomNumber});
 
-  unavailableRooms = new Set(unavailableRooms);
-  unavailableRooms = [...unavailableRooms];
-console.log(unavailableRooms)
+  unavailableRoomsRoomNumbers = new Set(unavailableRoomsRoomNumbers);
+  unavailableRoomsRoomNumbers = [...unavailableRoomsRoomNumbers];
+  console.log(unavailableRoomsRoomNumbers)
   // let availableRooms = unavailableRooms.filter
     // console.log(unavailableRooms);
 // unavailableRooms.filter(())
   let availableRooms = app.roomModel.filter(booking => {
-    if (!unavailableRooms.includes(booking.number)) {
+    if (!unavailableRoomsRoomNumbers.includes(booking.number)) {
       return booking;
     }
   })
- console.log(availableRooms);
- console.log(searchResultsSection);
-  // console.log(bookingByRoomTypefoo);
+ console.log('available rooms', availableRooms);
 
-availableRooms.forEach((booking) => {
-  let bookingByRoomType2 = app.roomModel.filter((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
+availableRooms.forEach((room) => {
+  // let bookingByRoomType2 = app.roomModel.filter((hotelRoom) => { return hotelRoom.number !== booking.roomNumber })
+console.log(room);
 
   searchResultsSection.innerHTML +=
     `
         <div class="booking-card">
           <div class="room-image"></div>
           <div class="room-details">
-          <p>Date: ${booking.date}</p>
-            <p>${bookingByRoomType2.roomType}</p>
-            <p>Bed Size: ${bookingByRoomType2.bedSize}</p>
-            <p>Number of Beds: ${bookingByRoomType2.numBeds}</p>
+          <p>Date: ${newDate}</p>
+            <p>${room.roomType}</p>
+            <p>Bed Size: ${room.bedSize}</p>
+            <p>Number of Beds: ${room.numBeds}</p>
           </div>
-          <div class="room-cost-book-btn">Cost Per Night: $ ${bookingByRoomType2.costPerNight}</div>
+          <div class="room-cost-book-btn">Cost Per Night: $ ${room.costPerNight}</div>
         </div>
         `;
 });
-  // availableRooms.forEach((booking) => {
-  //   bookingByRoomType2 = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
-    // console.log(bookingByRoomType2);
-    // searchResultsSection.innerHTML +=
-    // `
-    //     <div class="booking-card">
-    //       <div class="room-image"></div>
-    //       <div class="room-details">
-    //       <p>Date: ${booking.date}</p>
-    //         <p>${bookingByRoomType2.roomType}</p>
-    //         <p>Bed Size: ${bookingByRoomType2.bedSize}</p>
-    //         <p>Number of Beds: ${bookingByRoomType2.numBeds}</p>
-    //       </div>
-    //       <div class="room-cost-book-btn">Cost Per Night: $ ${bookingByRoomType2.costPerNight}</div>
-    //     </div>
-    //     `;
+
   displaySearchResults()
   });
 
