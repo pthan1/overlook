@@ -60,8 +60,6 @@ const getApiData = () => {
   return Promise.all([allCustomers, allRooms, allBookings])
 };
 
-
-
 function returnData() {
   getApiData().then(data => {
     allCustomers = data[0];
@@ -80,9 +78,7 @@ const instantiateData = () => {
   
 };
 
-
 window.addEventListener('load', returnData);
-
 
 loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
@@ -108,22 +104,14 @@ loginSubmitBtn.addEventListener('click', function(e) {
         `;
   });
   displayUserDashboard();
-
   }
 )
-
-function displayUserBookings(userBookings) {
-  
-  
-}
-
 
 const displayUserDashboard = () => {
   hide(mainPageView);
   hide(searchResultsView);
   show(userDashboardView)
 }
-
 
 const show = (element) => {
   element.classList.remove("hidden");
