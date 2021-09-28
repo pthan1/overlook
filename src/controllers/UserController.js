@@ -14,16 +14,19 @@ class UserController {
 
   returnUserBookings(customerId) {
     let usersBooking = this.bookingModel.filter(booking => {return booking.userID === parseInt(customerId)});
-    console.log(usersBooking);
     return usersBooking;
   }
 
   calculateUserTotalSpentOnBookings(userBookings) {
-    userBookings.reduce((acc, booking) => {
-      acc += booking.costPerNight;
-      return acc;
-    }, 0)
-  }
+    let totalCost = 0;
+    console.log(userBookings);
+    userBookings.forEach((booking) => {
+      let bookingByRoomType = this.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
+      totalCost += bookingByRoomType.costPerNight;
+    }
+    )
+    return totalCost;
+}
 }
   
 export default UserController;

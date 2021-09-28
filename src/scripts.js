@@ -35,7 +35,7 @@ const usernameField = document.getElementById('username-field');
 const passwordField = document.getElementById('password-field');
 
 const userDashboardView = document.querySelector('.user-dashboard-view');
-const totalSpentHeader = document.querySelector('.total-spent');
+export const totalSpentHeader = document.querySelector('.total-spent');
 
 const searchForRoomsForm = document.querySelector('.search-for-rooms-form');
 const checkInDateField = document.getElementById('check-in-date');
@@ -93,21 +93,18 @@ window.addEventListener('load', function() {
   returnTodaysDate();
 });
 
-let totalCost = 0;
 
-addEventListener('click', function(e) {
+loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
   if (passwordField.value === 'overlook2021') {
     customerId = app.returnUserId(usernameField.value);
     let userBookings2 = app.returnUserBookings(customerId);
-
-    app.calculateUserTotalSpentOnBookings(userBookings2);
     
+    let totalCost = app.calculateUserTotalSpentOnBookings(userBookings2);
+    updateDom.renderTotalCost(totalCost);
+
     userBookings2.forEach((booking) => {
     let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
-
-
-      totalSpentHeader.innerHTML = "Total Spent on Bookings: $ " + totalCost.toFixed(2);
 
     userBookingContainer.innerHTML += 
         `
