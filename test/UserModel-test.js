@@ -1,31 +1,40 @@
-import chai from 'chai';
+import {assert} from 'chai';
 import UserModel from '../src/models/UserModel';
-const expect = chai.expect;
+import testData from '../test/testData';
 
 describe('UserModel', function() {
-  let userModel;
+  let userModel, allCustomers, singleCustomer;
   
   beforeEach(function() {
-    userModel = new UserModel();
+    allCustomers = testData.allCustomers;
+    singleCustomer = testData.currentCustomer;
+    userModel = new UserModel(allCustomers, singleCustomer);
   })
   
-  it('should get all customers', function () {
-    expect(true).to.equal(true);
+  it('should store all customers', function () {
+    assert.deepEqual(userModel.allCustomers, [
+      {
+        "id": 1,
+        "name": "Leatha Ullrich"
+      },
+      {
+        "id": 2,
+        "name": "Rocio Schuster"
+      },
+      {
+        "id": 3,
+        "name": "Kelvin Schiller"
+      }
+    ]);
   });
 
-  it('', function () {
-    expect(true).to.equal(true);
+  it('should store single customer', function () {
+    assert.deepEqual(userModel.currentCustomer, {
+      "id": 1,
+      "name": "Leatha Ullrich"
+    })
   });
 
-  it('', function () {
-    expect(true).to.equal(true);
-  });
 
-  it('', function () {
-    expect(true).to.equal(true);
-  });
 
-  it('', function () {
-    expect(true).to.equal(true);
-  });
 });

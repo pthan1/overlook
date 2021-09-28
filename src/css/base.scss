@@ -6,9 +6,46 @@ body {
 	background: $primary-background;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	mix-blend-mode: darken;
+	// mix-blend-mode: darken;
+}
+
+.main-page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.introduction {
+	.welcome {
+		color: $white-color;
+		font-family: $primary-font;
+	}
+	.logo-large {
+		color: $gold-main-color;
+	}
+	.tagline {
+		color: $gold-main-color;
+	}
+}
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .hidden {
 	display: none;
+}
+
+.user-booking-container {
+	border: 1px red solid;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.booking-card {
+	margin: 3px;
+	background-color: grey;
 }

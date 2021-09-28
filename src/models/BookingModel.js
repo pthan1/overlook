@@ -1,18 +1,22 @@
 import db from '../apiCalls';
 
 class BookingModel {
-  constructor() {
-    this.allBookings = this.getAllBookings();
-    this.UserBookings = [];
+  constructor(allBookings, userBookings) {
+    this.allBookings = allBookings;
+    this.userBookings = userBookings;
   }
 
-  getAllBookings() {
-    this.allBookings = db.getAllBookings()
-    .then(data => {return data});
-    // maybe I should return a filtered list?
-    return db.getAllBookings
-    .then(data => {return data});
-  }
+  // getAllBookings() {
+  //   this.allBookings = Promise.resolve(db.getAllBookings().then(data => data))
+  //   // .then(data => data);
+  //   // maybe I should return a filtered list?
+  //   // console.log('allBookingsArray', db.getAllBookings()
+  //   //   .then(data => { console.log(data) }));
+
+  //   // return db.getAllBookings()
+  //   // .then(data => data);
+
+  // }
 
   addNewBooking(booking) {
     db.addNewBooking(booking)
@@ -32,6 +36,7 @@ class BookingModel {
   }
 
   filterUserBookings(customerId, allRooms) {
+    // this.allBookings = this.allBookings.then(data => data);
     this.userBookings = this.allBookings.filter(booking => booking.userID === customerId).map(booking => {
       allRooms.forEach(room => {
         if (room.number === booking.roomNumber) {
