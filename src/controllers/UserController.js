@@ -13,10 +13,13 @@ class UserController {
   }
 
   returnUserBookings(customerId) {
-    console.log(this.bookingModel)  
-    console.log(customerId)
     let usersBooking = this.bookingModel.filter(booking => {return booking.userID === parseInt(customerId)});
+    console.log(usersBooking);
     return usersBooking;
+  }
+
+  calculateUserTotalSpentOnBookings() {
+
   }
 }
   

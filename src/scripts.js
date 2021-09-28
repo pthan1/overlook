@@ -51,7 +51,9 @@ const searchResultsView = document.querySelector('.search-results-view');
 const loginSubmitBtn = document.querySelector('.submit-btn-login');
 
 
-var allCustomers, allRooms, allBookings;
+var allCustomers, allRooms;
+
+export var allBookings;
 
 var allCustomers2;
 
@@ -91,13 +93,14 @@ window.addEventListener('load', function() {
   returnTodaysDate();
 });
 
-loginSubmitBtn.addEventListener('click', function(e) {
+let totalCost = 0;
+
+addEventListener('click', function(e) {
   e.preventDefault();
   if (passwordField.value === 'overlook2021') {
     customerId = app.returnUserId(usernameField.value);
     let userBookings2 = app.returnUserBookings(customerId);
 
-  let totalCost = 0;
 
     userBookings2.forEach((booking) => {
     let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
@@ -196,7 +199,9 @@ searchResultsSection.addEventListener('click', function (e) {
 })
 
 const bookRoom = (booking) => {
-  db.addNewBooking(booking);
+  db.addNewBooking(booking)
+  .then(app.returnUserBookings(customerId))
+  // .then(display the TOtal cost)
 };
 
 

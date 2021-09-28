@@ -8,18 +8,36 @@ import testData from '../test/testData';
 
 
 describe('UserController', function () {
-  let userController, userModel, userView, bookingModel, roomModel;
+  let userController;
 
 
   beforeEach(function() {
-    userModel = new UserModel();
-    userView = new UserView();
-    bookingModel = new BookingModel();
-    userController = new UserController(userModel, userView, bookingModel, roomModel);
+    userController = new UserController(testData.allCustomers, testData.allBookings, testData.allRooms);
   });
 
-  it('should store an instance of model', function () {
-    assert.instanceOf(userController.)
+  it('should store all customers', function () {
+    assert.deepEqual(userController.userModel, [
+      {
+        "id": 1,
+        "name": "Leatha Ullrich"
+      },
+      {
+        "id": 2,
+        "name": "Rocio Schuster"
+      },
+      {
+        "id": 3,
+        "name": "Kelvin Schiller"
+      }
+    ])
+  });
+
+  it('should store all bookings', function () {
+    assert.deepEqual(userController.allBookings, )
+  });
+
+  it('should store all rooms', function () {
+    // assert.instanceOf(userController.)
   });
 
   it('should return bookings for a customer Id', function () {

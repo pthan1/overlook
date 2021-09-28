@@ -1,3 +1,5 @@
+import { allBookings } from "./scripts";
+
 const db = {
 
   // in userModel.js
@@ -39,7 +41,7 @@ const db = {
       }
       response.json()
     })
-    .then(data => data)
+    .then(response => allBookings.push(response.newBooking))
     .catch(err => console.log(err))
   },
 
