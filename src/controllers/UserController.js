@@ -16,12 +16,24 @@ class UserController {
   returnUserBookings(customerId) {
     console.log(this.bookingModel)  
     console.log(customerId)
-    let usersBookings = this.bookingModel.filter(booking => {return booking.userID === parseInt(customerId)});
-    return usersBookings;
+    let usersBooking = this.bookingModel.filter(booking => {return booking.userID === parseInt(customerId)});
+    return usersBooking;
     // this.userView.displayUserBookings(userBookings);
     // console.log('userbookings', userBookings)
     //   this.userView.displayUserBookings(userBookings);
   }
+
+  setRoomTypeForBooking(userBookings) {
+
+ 
+    userBookings.forEach((booking) => {
+      let bookingsByRoomType = this.roomModel.find((hotelRoom) => {return hotelRoom.number === booking.roomNumber})
+      updateDom.displayUserBookings(userBookings)
+    });
+    
+
+  } 
+
 }
   
 

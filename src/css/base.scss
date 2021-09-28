@@ -37,3 +37,15 @@ body {
 .hidden {
 	display: none;
 }
+
+.user-booking-container {
+	border: 1px red solid;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.booking-card {
+	margin: 3px;
+	background-color: grey;
+}
