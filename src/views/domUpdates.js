@@ -1,4 +1,4 @@
-import { totalSpentHeader, app, userBookingContainer } from '../scripts'
+import { totalSpentHeader, app, userBookingContainer, noResultsFoundSection, searchResultsSection, show, hide, newDate} from '../scripts'
 
 const updateDom = {
   renderTotalCost(totalCost) {
@@ -24,7 +24,36 @@ const updateDom = {
         </div>
         `;
     })
-  }
+  },
+
+  displaySearchResults(filteredRooms) {
+    searchResultsSection.innerHTML = '';
+
+    if (filteredRooms.length > 0) {
+      hide(noResultsFoundSection);
+      filteredRooms.forEach((room) => {
+        searchResultsSection.innerHTML +=
+          `
+        <div class="booking-card">
+          <div class="room-details" id="${room.number}">
+            <p>Date: ${newDate}</p>
+            <p>Room: ${room.number}</p>
+            <p>${room.roomType}</p>
+            <p>Bed Size: ${room.bedSize}</p>
+            <p>Number of Beds: ${room.numBeds}</p>
+            <p>Cost Per Night: $ ${room.costPerNight}</p>
+            <br>
+            <button class="book-now-btn" type="button">Book Now</button>
+          </div>
+        </div>
+        `;
+      });
+    } else {
+      show(noResultsFoundSection);
+    }
+  },
+
+
 }
 
 export default updateDom;

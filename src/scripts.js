@@ -43,8 +43,8 @@ const searchForRoomTypeField = document.getElementById('room-type');
 const searchForRoomsBtn = document.querySelector('.submit-btn-search-for-rooms');
 const resetFiltersBtn = document.querySelector('.reset-filters-btn');
 const backToDashboardBtn = document.querySelector('.back-to-dashboard-btn');
-const noResultsFoundSection = document.querySelector('.no-results-found');
-const searchResultsSection = document.querySelector('.search-results-container');
+export const noResultsFoundSection = document.querySelector('.no-results-found');
+export const searchResultsSection = document.querySelector('.search-results-container');
 
 
 const searchResultsView = document.querySelector('.search-results-view');
@@ -105,42 +105,24 @@ loginSubmitBtn.addEventListener('click', function(e) {
     updateDom.renderTotalCost(totalCost);
 
     updateDom.displayUserBookings(userBookings2);
-  //   userBookings2.forEach((booking) => {
-  //   let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
-
-  //   userBookingContainer.innerHTML += 
-  //       `
-  //       <div class="booking-card">
-  //         <div class="room-image"></div>
-  //         <div class="room-details">
-  //         <p>Date: ${booking.date}</p>
-  //           <p>${bookingByRoomType.roomType}</p>
-  //           <p>Bed Size: ${bookingByRoomType.bedSize}</p>
-  //           <p>Number of Beds: ${bookingByRoomType.numBeds}</p>
-  //         </div>
-  //         <div class="room-cost-book-btn">Cost Per Night: $ ${bookingByRoomType.costPerNight}</div>
-  //       </div>
-  //       `;
-  // });
-  displayUserDashboard();
+    displayUserDashboard();
   }
 }
 )
-
+export let newDate;
 searchForRoomsBtn.addEventListener('click', function(e) {
   e.preventDefault();
   let checkInDate = checkInDateField.value;
-console.log(checkInDate);
-  let newDate = dayjs(checkInDate).format('YYYY/MM/DD')
+  newDate = dayjs(checkInDate).format('YYYY/MM/DD')
+console.log(newDate);
 
   let roomTypeToSearch = searchForRoomTypeField.value;
-  console.log(roomTypeToSearch)
 
   let unavailableRoomByBooking = app.bookingModel.filter(booking => { 
     if (booking.date === newDate) {
-    return booking;
-    }}
-  )
+      return booking;
+    }
+  })
   
   let unavailableRoomsRoomNumbers = unavailableRoomByBooking.map(room => {return room.roomNumber});
 
@@ -148,36 +130,37 @@ console.log(checkInDate);
   unavailableRoomsRoomNumbers = [...unavailableRoomsRoomNumbers];
 
   let availableRooms = app.roomModel.filter(booking => {
-    if (!unavailableRoomsRoomNumbers.includes(booking.number)) {
-      return booking;
-    }
-  })
-console.log(availableRooms)
-let filteredRooms = filterRoomsByRoomType(availableRooms, roomTypeToSearch);
-  searchResultsSection.innerHTML = '';
+    return !unavailableRoomsRoomNumbers.includes(booking.number) }
+  );
 
-if (filteredRooms.length > 0){
-  hide(noResultsFoundSection);
-filteredRooms.forEach((room) => {
-  searchResultsSection.innerHTML +=
-    `
-        <div class="booking-card">
-          <div class="room-details" id="${room.number}">
-            <p>Date: ${newDate}</p>
-            <p>Room: ${room.number}</p>
-            <p>${room.roomType}</p>
-            <p>Bed Size: ${room.bedSize}</p>
-            <p>Number of Beds: ${room.numBeds}</p>
-            <p>Cost Per Night: $ ${room.costPerNight}</p>
-            <br>
-            <button class="book-now-btn" type="button">Book Now</button>
-          </div>
-        </div>
-        `;
-});
-} else {
-  show(noResultsFoundSection);
-}
+  let filteredRooms = filterRoomsByRoomType(availableRooms, roomTypeToSearch);
+
+  updateDom.displaySearchResults(filteredRooms);
+
+//   searchResultsSection.innerHTML = '';
+
+// if (filteredRooms.length > 0){
+//   hide(noResultsFoundSection);
+// filteredRooms.forEach((room) => {
+//   searchResultsSection.innerHTML +=
+//     `
+//         <div class="booking-card">
+//           <div class="room-details" id="${room.number}">
+//             <p>Date: ${newDate}</p>
+//             <p>Room: ${room.number}</p>
+//             <p>${room.roomType}</p>
+//             <p>Bed Size: ${room.bedSize}</p>
+//             <p>Number of Beds: ${room.numBeds}</p>
+//             <p>Cost Per Night: $ ${room.costPerNight}</p>
+//             <br>
+//             <button class="book-now-btn" type="button">Book Now</button>
+//           </div>
+//         </div>
+//         `;
+// });
+// } else {
+//   show(noResultsFoundSection);
+// }
 
   displaySearchResults()
   });
@@ -229,11 +212,11 @@ const displaySearchResults = () => {
 };
 
 
-const show = (element) => {
+export const show = (element) => {
   element.classList.remove("hidden");
 };
 
-const hide = (element) => {
+export const hide = (element) => {
   element.classList.add("hidden");
 };
 
