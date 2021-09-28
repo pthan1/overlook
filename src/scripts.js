@@ -101,11 +101,11 @@ addEventListener('click', function(e) {
     customerId = app.returnUserId(usernameField.value);
     let userBookings2 = app.returnUserBookings(customerId);
 
-
+    app.calculateUserTotalSpentOnBookings(userBookings2);
+    
     userBookings2.forEach((booking) => {
     let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
 
-    totalCost += bookingByRoomType.costPerNight;
 
       totalSpentHeader.innerHTML = "Total Spent on Bookings: $ " + totalCost.toFixed(2);
 

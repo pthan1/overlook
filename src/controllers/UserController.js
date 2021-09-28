@@ -18,8 +18,11 @@ class UserController {
     return usersBooking;
   }
 
-  calculateUserTotalSpentOnBookings() {
-
+  calculateUserTotalSpentOnBookings(userBookings) {
+    userBookings.reduce((acc, booking) => {
+      acc += booking.costPerNight;
+      return acc;
+    }, 0)
   }
 }
   
