@@ -96,11 +96,14 @@ loginSubmitBtn.addEventListener('click', function(e) {
   // if (passwordField.value === 'overlook2021') {
     customerId = app.returnUserId(usernameField.value);
     let userBookings2 = app.returnUserBookings(customerId);
-  
+  let totalCost = 0;
+
     userBookings2.forEach((booking) => {
     let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
-      
-    // totalSpent.innerHTML += bookingByRoomType.costPerNight;
+
+    totalCost += bookingByRoomType.costPerNight;
+
+      totalSpentHeader.innerHTML = "Total Spent on Bookings: $ " + totalCost;
 
     userBookingContainer.innerHTML += 
         `
