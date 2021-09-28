@@ -138,12 +138,29 @@ console.log(unavailableRooms)
       return booking;
     }
   })
-  var bookingByRoomType2;
  console.log(availableRooms);
  console.log(searchResultsSection);
-  console.log(bookingByRoomTypefoo);
-  availableRooms.forEach((booking) => {
-    bookingByRoomType2 = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
+  // console.log(bookingByRoomTypefoo);
+
+availableRooms.forEach((booking) => {
+  let bookingByRoomType2 = app.roomModel.filter((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
+
+  searchResultsSection.innerHTML +=
+    `
+        <div class="booking-card">
+          <div class="room-image"></div>
+          <div class="room-details">
+          <p>Date: ${booking.date}</p>
+            <p>${bookingByRoomType2.roomType}</p>
+            <p>Bed Size: ${bookingByRoomType2.bedSize}</p>
+            <p>Number of Beds: ${bookingByRoomType2.numBeds}</p>
+          </div>
+          <div class="room-cost-book-btn">Cost Per Night: $ ${bookingByRoomType2.costPerNight}</div>
+        </div>
+        `;
+});
+  // availableRooms.forEach((booking) => {
+  //   bookingByRoomType2 = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
     // console.log(bookingByRoomType2);
     // searchResultsSection.innerHTML +=
     // `
@@ -158,6 +175,7 @@ console.log(unavailableRooms)
     //       <div class="room-cost-book-btn">Cost Per Night: $ ${bookingByRoomType2.costPerNight}</div>
     //     </div>
     //     `;
+  displaySearchResults()
   });
 
   // console.log(filteredResults);
@@ -167,9 +185,9 @@ console.log(unavailableRooms)
 // return only bookings that have a matching room number for that room
 // check the Dates
 
-  displaySearchResults()
+  
 
-})
+
 
 const displayUserDashboard = () => {
   hide(mainPageView);
