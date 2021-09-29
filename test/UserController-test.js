@@ -1,9 +1,5 @@
 import { assert } from 'chai';
 import UserController from '../src/controllers/UserController';
-import UserModel from '../src/models/UserModel'
-import UserView from '../src/views/UserView'
-import BookingModel from '../src/models/BookingModel';
-import RoomModel from '../src/models/RoomModel';
 import testData from '../test/testData';
 
 
@@ -32,7 +28,7 @@ describe('UserController', function () {
   });
 
   it('should store all bookings', function () {
-    assert.deepEqual(userController.allBookings, [
+    assert.deepEqual(userController.bookingModel, [
       {
         "id": "5fwrgu4i7k55hl6sz",
         "userID": 9,
@@ -72,7 +68,7 @@ describe('UserController', function () {
   });
 
   it('should store all rooms', function () {
-    assert.deepEqual(userController.allRooms, [
+    assert.deepEqual(userController.roomModel, [
       {
         "number": 1,
         "roomType": "residential suite",
@@ -179,21 +175,13 @@ describe('UserController', function () {
         "userID": 1,
         "date": "2020/02/05",
         "roomNumber": 12,
-        "roomServiceCharges": [],
-        "room": {
-          "number": 12,
-          "roomType": "single room",
-          "bidet": false,
-          "bedSize": "twin",
-          "numBeds": 2,
-          "costPerNight": 172.09
-        }
-      }
-    ]);
-  });
+        "roomServiceCharges": []
+        }]
+    )
+      });
 
    it('should return a customer id', function () {
-     assert.deepEqual(userController.returnUserId('customer50'), 50);
+     assert.equal(userController.returnUserId('customer50'), 50);
    });
 
   it('should calculate total spent on bookings for a user', function () {

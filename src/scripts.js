@@ -3,9 +3,6 @@ import db from './apiCalls';
 import UserController from './controllers/UserController';
 import updateDom from './views/domUpdates';
 
-import UserView from './views/UserView';
-import BookingView from './views/UserView'
-
 import Customer from './Classes/Customer';
 import './css/base.scss';
 import './images/bg.jpg'
