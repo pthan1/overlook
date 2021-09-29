@@ -18,6 +18,7 @@ const mainPageView = document.querySelector('.main-page');
 const loginForm = document.querySelector('.login-form');
 const usernameField = document.getElementById('username-field');
 const passwordField = document.getElementById('password-field');
+const 
 
 const userDashboardView = document.querySelector('.user-dashboard-view');
 export const totalSpentHeader = document.querySelector('.total-spent');
@@ -70,7 +71,6 @@ const instantiateData = () => {
     return new Customer(customer);
   });
   app = new UserController(allCustomers2, allBookings, allRooms)
-  
 };
 
 window.addEventListener('load', function() {
@@ -90,7 +90,11 @@ loginSubmitBtn.addEventListener('click', function(e) {
 
     updateDom.displayUserBookings(userBookings2);
     displayUserDashboard();
+  } else {
+    passwordField.insertAdjacentHTML('afterend', '')
+    passwordField.insertAdjacentHTML('afterend', '<p>The login information you provided is incorrect. Please try again.</p>')
   }
+
 })
 
 searchForRoomsBtn.addEventListener('click', function(e) {
