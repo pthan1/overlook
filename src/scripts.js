@@ -11,11 +11,10 @@ var dayjs = require('dayjs');
 var customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)
 
-const userBookingsSection = document.querySelector('.user-bookings');
 export const userBookingContainer = document.querySelector('.user-booking-container');
 
+const serverErrorSection = document.querySelector('.server-error-section');
 const mainPageView = document.querySelector('.main-page');
-const loginForm = document.querySelector('.login-form');
 const usernameField = document.getElementById('username-field');
 const passwordField = document.getElementById('password-field');
 const loginError = document.querySelector('.login-error');
@@ -24,7 +23,6 @@ const calendarError = document.querySelector('.calendar-empty-error ');
 const userDashboardView = document.querySelector('.user-dashboard-view');
 export const totalSpentHeader = document.querySelector('.total-spent');
 
-const searchForRoomsForm = document.querySelector('.search-for-rooms-form');
 const checkInDateField = document.getElementById('check-in-date');
 const searchForRoomTypeField = document.getElementById('room-type');
 const searchForRoomsBtn = document.querySelector('.submit-btn-search-for-rooms');
@@ -61,8 +59,8 @@ function returnData() {
     allRooms = data[1];
     allBookings = data[2];
     instantiateData();
-    
   })
+  .catch((error) => displayErrorMessage(error, serverErrorSection))
 };
 
 const instantiateData = () => {
@@ -151,6 +149,7 @@ const bookRoom = (booking) => {
   .then(app.returnUserBookings(customerId))
   .then(updateDom.displayUserBookings(app.userBookings))
   .then(app.calculateUserTotalSpentOnBookings(app.userBookings))
+  .catch((error) => displayErrorMessage(error, serverErrorSection));
 };
 
 
@@ -194,6 +193,11 @@ const setMinimumDateForCalendar = () => {
 
   today = yyyy + '-' + mm + '-' + dd;
   checkInDateField.setAttribute("min", today);
+}
+
+const displayErrorMessage = (error, container) => {
+  updateDom.show(serverErrorSection);
+  container.innerHTML = `<h2> Sorry!  Our servers are diving for pearls! </h2>`;
 }
 
 backToDashboardBtn.addEventListener('click', function() {displayUserDashboard()})
