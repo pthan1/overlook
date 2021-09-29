@@ -1,6 +1,7 @@
-import { allBookings } from "./scripts";
+import UserController from "./controllers/UserController";
+import { allBookings, app } from "./scripts";
 
-const db = {
+export const db = {
 
   // in userModel.js
   getAllCustomers() {
@@ -28,6 +29,8 @@ const db = {
 
   // in BookingModel.js
   addNewBooking(booking) {
+    let newBooking;
+    console.log('before', app.bookingModel)
     return fetch('http://localhost:3001/api/v1/bookings', {
       method: 'POST',
       body: JSON.stringify(booking),
@@ -35,15 +38,18 @@ const db = {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => {
-      if (!response.ok) {
-        console.log(`HTTP error! status: ${response.status}`)
-      }
-      response.json()
-    })
-    .then(response => allBookings.push(response.newBooking))
+    .then(response => response.json())
+      // if (!response.ok) {
+      //   console.log(`HTTP error! status: ${response.status}`)
+      // }
+      // console.log(response);
+    //   response.json()
+    // })
+    // .then(response => console.log(response.newBooking))
+    .then(resp => newBooking = resp.newBooking)
+    .then(console.log('after', app.bookingModel))
     .catch(err => console.log(err))
-  },
+},
 
   // in BookingModel.js
   deleteSingleBooking(bookingId) {

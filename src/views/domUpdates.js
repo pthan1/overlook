@@ -1,4 +1,4 @@
-import { totalSpentHeader, app, userBookingContainer, noResultsFoundSection, searchResultsSection, hide, newDate} from '../scripts'
+import { totalSpentHeader, app, userBookingContainer, noResultsFoundSection, searchResultsSection, newDate} from '../scripts'
 
 const updateDom = {
   renderTotalCost(totalCost) {
@@ -7,6 +7,7 @@ const updateDom = {
 
 
   displayUserBookings(userBookings) {
+    userBookingContainer.innerHTML = '';
     userBookings.forEach((booking) => {
       let bookingByRoomType = app.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
 
@@ -30,7 +31,7 @@ const updateDom = {
     searchResultsSection.innerHTML = '';
 
     if (filteredRooms.length > 0) {
-      hide(noResultsFoundSection);
+      updateDom.hide(noResultsFoundSection);
       filteredRooms.forEach((room) => {
         searchResultsSection.innerHTML +=
           `
@@ -55,6 +56,10 @@ const updateDom = {
 
   show(element) {
     element.classList.remove("hidden");
+  },
+
+  hide(element) {
+    element.classList.add("hidden");
   }
 
 }
