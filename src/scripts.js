@@ -3,10 +3,6 @@ import db from './apiCalls';
 import UserController from './controllers/UserController';
 import updateDom from './views/domUpdates';
 
-import UserModel from './models/UserModel';
-import BookingModel from './models/BookingModel';
-import RoomModel from './models/RoomModel';
-
 import UserView from './views/UserView';
 import BookingView from './views/UserView'
 
