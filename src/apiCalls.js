@@ -3,7 +3,6 @@ import { allBookings, app } from "./scripts";
 
 export const db = {
 
-  // in userModel.js
   getAllCustomers() {
     return fetch('http://localhost:3001/api/v1/customers')
     .then(response => response.json())
@@ -11,7 +10,6 @@ export const db = {
     .catch(err => console.log(err));
   },
   
-  // in BookingModel.js
   getAllRooms () {
   return fetch('http://localhost:3001/api/v1/rooms')
     .then(response => response.json())
@@ -19,7 +17,6 @@ export const db = {
     .catch(err => console.log(err));
   },
   
-  // in BookingModel.js
   getAllBookings() {
     return fetch('http://localhost:3001/api/v1/bookings')
     .then(response => response.json())
@@ -27,10 +24,9 @@ export const db = {
     .catch(err => console.log(err));
   },
 
-  // in BookingModel.js
   addNewBooking(booking) {
     let newBooking;
-    console.log('before', app.bookingModel)
+    console.log('before', allBookings)
     return fetch('http://localhost:3001/api/v1/bookings', {
       method: 'POST',
       body: JSON.stringify(booking),
@@ -46,12 +42,11 @@ export const db = {
     //   response.json()
     // })
     // .then(response => console.log(response.newBooking))
-    .then(resp => newBooking = resp.newBooking)
-    .then(console.log('after', app.bookingModel))
-    .catch(err => console.log(err))
+    .then(resp => allBookings.push(resp.newBooking)
+    .then(console.log('after', allBookings))
+    .catch(err => console.log(err)))
 },
 
-  // in BookingModel.js
   deleteSingleBooking(bookingId) {
     return fetch(`http://localhost:3001/api/v1/bookings/${bookingId}`, {
       method: 'DELETE'
