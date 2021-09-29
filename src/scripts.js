@@ -78,9 +78,9 @@ window.addEventListener('load', function() {
 
 loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
-  if (passwordField.value === 'overlook2021') {
-    customerId = app.returnUserId(usernameField.value);
-    if (customerId > 0 && customerId < 51) {
+  customerId = app.returnUserId(usernameField.value);
+  if (passwordField.value === 'overlook2021' && customerId > 0 && customerId < 51) {
+    
       app.userId = customerId;
       let userBookings2 = app.returnUserBookings(customerId);
       
@@ -89,8 +89,7 @@ loginSubmitBtn.addEventListener('click', function(e) {
 
       updateDom.displayUserBookings(userBookings2);
       displayUserDashboard();
-    }
-  } else {
+    } else {
     updateDom.show(loginError);
   }
 
