@@ -28,11 +28,6 @@ class UserController {
     )
     return totalCost;
   }
-
-  pushNewBooking(newBooking) {
-    this.bookingModel.push(newBooking);
-    this.returnUserBookings(this.userId);
-  }
 }
   
 export default UserController;
