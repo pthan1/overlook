@@ -1,4 +1,4 @@
-import { totalSpentHeader, app, userBookingContainer, noResultsFoundSection, searchResultsSection, show, hide, newDate} from '../scripts'
+import { totalSpentHeader, app, userBookingContainer, noResultsFoundSection, searchResultsSection, hide, newDate} from '../scripts'
 
 const updateDom = {
   renderTotalCost(totalCost) {
@@ -49,10 +49,13 @@ const updateDom = {
         `;
       });
     } else {
-      show(noResultsFoundSection);
+      updateDom.show(noResultsFoundSection);
     }
   },
 
+  show(element) {
+    element.classList.remove("hidden");
+  }
 
 }
 

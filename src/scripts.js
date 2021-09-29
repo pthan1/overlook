@@ -136,32 +136,6 @@ console.log(newDate);
   let filteredRooms = filterRoomsByRoomType(availableRooms, roomTypeToSearch);
 
   updateDom.displaySearchResults(filteredRooms);
-
-//   searchResultsSection.innerHTML = '';
-
-// if (filteredRooms.length > 0){
-//   hide(noResultsFoundSection);
-// filteredRooms.forEach((room) => {
-//   searchResultsSection.innerHTML +=
-//     `
-//         <div class="booking-card">
-//           <div class="room-details" id="${room.number}">
-//             <p>Date: ${newDate}</p>
-//             <p>Room: ${room.number}</p>
-//             <p>${room.roomType}</p>
-//             <p>Bed Size: ${room.bedSize}</p>
-//             <p>Number of Beds: ${room.numBeds}</p>
-//             <p>Cost Per Night: $ ${room.costPerNight}</p>
-//             <br>
-//             <button class="book-now-btn" type="button">Book Now</button>
-//           </div>
-//         </div>
-//         `;
-// });
-// } else {
-//   show(noResultsFoundSection);
-// }
-
   displaySearchResults()
   });
 
@@ -202,19 +176,19 @@ const returnTodaysDate = () => {
 const displayUserDashboard = () => {
   hide(mainPageView);
   hide(searchResultsView);
-  show(userDashboardView);
+  updateDom.show(userDashboardView);
 };
 
 const displaySearchResults = () => {
   hide(mainPageView);
   hide(userDashboardView);
-  show(searchResultsView);
+  updateDom.show(searchResultsView);
 };
 
 
-export const show = (element) => {
-  element.classList.remove("hidden");
-};
+// export const show = (element) => {
+//   element.classList.remove("hidden");
+// };
 
 export const hide = (element) => {
   element.classList.add("hidden");
