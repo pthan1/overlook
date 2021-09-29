@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webpack Starter Kit</title>
 </head>
-<body>
+<body class="body">
+  <section class="server-error-section hidden"></section>
   <section class="main-page">
     <section class="introduction">
       <h1 class="welcome">Welcome To</h1>
@@ -16,11 +17,12 @@
     <section class="login">
       <form class="login-form">
         <label for="username-field"></label>
-        <input type="text" id="username-field" name="username-field" placeholder="Username" value="customer50">
+        <input type="text" id="username-field" name="username-field" placeholder="Username">
         <label for="password-field"></label>
-        <input type="text" id="password-field" name="password-field" placeholder="Password">
+        <input type="password" id="password-field" name="password-field" placeholder="Password">
         <input type="submit" class="submit-btn-login">
       </form>
+      <p class="login-error hidden">The login information you provided is incorrect. Please try again.</p>
     </section>
   </section>
 
@@ -41,9 +43,9 @@
             </select>
             <input type="submit" class="submit-btn-search-for-rooms">
           </form>
+          <p class="calendar-empty-error hidden">Please select an arrival date!</p>
         </div>
       <section>
-
       <section class="user-bookings">
         <h2 class="my-bookings">My Bookings</h2>
         <h3 class="total-spent"></h3>
@@ -51,7 +53,6 @@
       </section>
     </div>
   </section>
-
   <section class="search-results-view hidden">
     <div class="content-container">
       <section class="search-by-room-type-section">
@@ -68,11 +69,7 @@
     </section>
     </div>
   </section>
-
-
-
   <script src="bundle.js"></script>
-
 </body>
 </html>
 
