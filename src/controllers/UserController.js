@@ -3,6 +3,8 @@ class UserController {
     this.userModel = allCustomers;
     this.bookingModel = allBookings;
     this.roomModel = allRooms;
+    this.userBookings = null;
+    this.userId;
   }
 
   returnUserId(usernameInputValue) {
@@ -13,10 +15,23 @@ class UserController {
   }
 
   returnUserBookings(customerId) {
-    console.log(this.bookingModel)  
-    console.log(customerId)
-    let usersBooking = this.bookingModel.filter(booking => {return booking.userID === parseInt(customerId)});
-    return usersBooking;
+    this.userBookings = this.bookingModel.filter(booking => {return booking.userID === parseInt(customerId)});
+    return this.userBookings;
+  }
+
+  calculateUserTotalSpentOnBookings(userBookings) {
+    let totalCost = 0;
+    userBookings.forEach((booking) => {
+      let bookingByRoomType = this.roomModel.find((hotelRoom) => { return hotelRoom.number === booking.roomNumber })
+      totalCost += bookingByRoomType.costPerNight;
+    }
+    )
+    return totalCost;
+  }
+
+  pushNewBooking(newBooking) {
+    this.bookingModel.push(newBooking);
+    this.returnUserBookings(this.userId);
   }
 }
   
