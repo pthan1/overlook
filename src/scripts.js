@@ -19,6 +19,7 @@ const loginForm = document.querySelector('.login-form');
 const usernameField = document.getElementById('username-field');
 const passwordField = document.getElementById('password-field');
 const loginError = document.querySelector('.login-error');
+const calendarError = document.querySelector('.calendar-empty-error ');
 
 const userDashboardView = document.querySelector('.user-dashboard-view');
 export const totalSpentHeader = document.querySelector('.total-spent');
@@ -74,6 +75,7 @@ const instantiateData = () => {
 window.addEventListener('load', function() {
   returnData();
   returnTodaysDate();
+  setMinimumDateForCalendar();
 });
 
 loginSubmitBtn.addEventListener('click', function(e) {
@@ -98,17 +100,18 @@ loginSubmitBtn.addEventListener('click', function(e) {
 
 searchForRoomsBtn.addEventListener('click', function(e) {
   e.preventDefault();
-  let checkInDate = checkInDateField.value;
-  newDate = dayjs(checkInDate).format('YYYY/MM/DD')
+  if(checkInDateField.value) {
+    let checkInDate = checkInDateField.value;
+    newDate = dayjs(checkInDate).format('YYYY/MM/DD')
 
-  let roomTypeToSearch = searchForRoomTypeField.value;
+    let roomTypeToSearch = searchForRoomTypeField.value;
 
-  let unavailableRoomByBooking = app.bookingModel.filter(booking => { 
-    if (booking.date === newDate) {
-      return booking;
-    }
+    let unavailableRoomByBooking = app.bookingModel.filter(booking => { 
+      if (booking.date === newDate) {
+        return booking;
+      }
   })
-  
+
   let unavailableRoomsRoomNumbers = unavailableRoomByBooking.map(room => {return room.roomNumber});
 
   unavailableRoomsRoomNumbers = new Set(unavailableRoomsRoomNumbers);
@@ -122,7 +125,11 @@ searchForRoomsBtn.addEventListener('click', function(e) {
 
   updateDom.displaySearchResults(filteredRooms);
   displaySearchResults()
-  });
+} else {
+    updateDom.show(calendarError);
+}
+
+});
 
 searchResultsSection.addEventListener('click', function (e) {
   if (e.target.className === 'book-now-btn') {
@@ -171,5 +178,22 @@ const displaySearchResults = () => {
   updateDom.show(searchResultsView);
 };
 
+const setMinimumDateForCalendar = () => {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+
+  today = yyyy + '-' + mm + '-' + dd;
+  checkInDateField.setAttribute("min", today);
+}
 
 backToDashboardBtn.addEventListener('click', function() {displayUserDashboard()})
