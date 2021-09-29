@@ -18,7 +18,7 @@ const mainPageView = document.querySelector('.main-page');
 const loginForm = document.querySelector('.login-form');
 const usernameField = document.getElementById('username-field');
 const passwordField = document.getElementById('password-field');
-const 
+const loginError = document.querySelector('.login-error');
 
 const userDashboardView = document.querySelector('.user-dashboard-view');
 export const totalSpentHeader = document.querySelector('.total-spent');
@@ -46,8 +46,6 @@ var customerId;
 
 export var app;
 export let newDate;
-
-let userModel;
 
 const getApiData = () => {
   allCustomers = db.getAllCustomers().then(data => data);
@@ -82,17 +80,18 @@ loginSubmitBtn.addEventListener('click', function(e) {
   e.preventDefault();
   if (passwordField.value === 'overlook2021') {
     customerId = app.returnUserId(usernameField.value);
-    app.userId = customerId;
-    let userBookings2 = app.returnUserBookings(customerId);
-    
-    let totalCost = app.calculateUserTotalSpentOnBookings(userBookings2);
-    updateDom.renderTotalCost(totalCost);
+    if (customerId > 0 && customerId < 51) {
+      app.userId = customerId;
+      let userBookings2 = app.returnUserBookings(customerId);
+      
+      let totalCost = app.calculateUserTotalSpentOnBookings(userBookings2);
+      updateDom.renderTotalCost(totalCost);
 
-    updateDom.displayUserBookings(userBookings2);
-    displayUserDashboard();
+      updateDom.displayUserBookings(userBookings2);
+      displayUserDashboard();
+    }
   } else {
-    passwordField.insertAdjacentHTML('afterend', '')
-    passwordField.insertAdjacentHTML('afterend', '<p>The login information you provided is incorrect. Please try again.</p>')
+    updateDom.show(loginError);
   }
 
 })
